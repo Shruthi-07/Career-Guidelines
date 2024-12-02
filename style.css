@@ -1,0 +1,139 @@
+/* styles.css */
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0; /* Make sure it's at the top */
+    left: 0; /* Ensure it starts at the very left edge */
+}
+
+header .logo img {
+    width: 120px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+  .hero {
+    background: url('https://i.pinimg.com/736x/d8/3d/73/d83d739d07a3afab37e05515554c187e.jpg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+  }
+  
+  .hero-text {
+    max-width: 600px;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  
+  .cta-buttons .btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .cta-buttons .btn-secondary {
+    background-color: #6C757D;
+  }
+  
+  main {
+    padding: 80px 20px 20px;
+  }
+  
+  section {
+    margin: 40px 0;
+    text-align: center;
+  }
+  
+  .service-cards .card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .service-cards .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .contact-icons {
+    position: fixed;
+    right: 20px;
+    bottom: 20px; /* Changed to bottom */
+}
+
+.contact-icons a {
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #007bb5;
+    border-radius: 50%;
+}
+
+.contact-icons a.whatsapp {
+    background-color: #25d366;
+}
+
+.contact-icons a.call {
+    background-color: #d32f2f;
+}
+
+.contact-icons a.info {
+  background-color: #ffc107;
+}
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  

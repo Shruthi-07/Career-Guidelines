@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Wisdom Sharing Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .form-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-section h2 {
+            color: #444;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .input-group textarea {
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .experiences-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .experience-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 350px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .experience-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .experience-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .experience-title {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .experience-advice {
+            font-style: italic;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .experience-industry {
+            background-color: #f1f1f1;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Career Wisdom Sharing Platform</h1>
+
+        <div class="form-section">
+            <h2>Share Your Career Advice</h2>
+            <div class="input-group">
+                <input type="text" id="nameInput" placeholder="Your Name">
+            </div>
+            <div class="input-group">
+                <textarea id="adviceInput" placeholder="Share your career advice and insights..."></textarea>
+            </div>
+            <button class="submit-btn" id="submitBtn">Submit Advice</button>
+        </div>
+
+        <div class="experiences-container" id="experiencesContainer">
+            <!-- Initial experience cards will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        // Initial experiences data
+        const initialExperiences = [
+            {
+                name: "Sarah Johnson",
+                title: "Senior Software Engineer",
+                advice: "Always be open to learning. Technology changes rapidly, so continuous learning is key to staying relevant in your career.",
+                industry: "Tech"
+            },
+            {
+                name: "Michael Chen",
+                title: "Marketing Director",
+                advice: "Network constantly. Some of my best opportunities came from connections I made years ago.",
+                industry: "Marketing"
+            },
+            {
+                name: "Emily Rodriguez",
+                title: "Startup Founder",
+                advice: "Don't be afraid to take calculated risks. Every failure is a learning opportunity that brings you closer to success.",
+                industry: "Entrepreneurship"
+            }
+        ];
+
+        // DOM Elements
+        const nameInput = document.getElementById('nameInput');
+        const adviceInput = document.getElementById('adviceInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const experiencesContainer = document.getElementById('experiencesContainer');
+
+        // Function to create experience card
+        function createExperienceCard(experience) {
+            const card = document.createElement('div');
+            card.classList.add('experience-card');
+            card.innerHTML = `
+                <div class="experience-name">${experience.name}</div>
+                <div class="experience-title">${experience.title}</div>
+                <div class="experience-advice">"${experience.advice}"</div>
+                <div class="experience-industry">${experience.industry}</div>
+            `;
+            return card;
+        }
+
+        // Render initial experiences
+        function renderInitialExperiences() {
+            initialExperiences.forEach(experience => {
+                const card = createExperienceCard(experience);
+                experiencesContainer.appendChild(card);
+            });
+        }
+
+        // Submit new experience
+        function submitExperience() {
+            const name = nameInput.value.trim();
+            const advice = adviceInput.value.trim();
+
+            if (name && advice) {
+                const newExperience = {
+                    name: name,
+                    title: "Professional",
+                    advice: advice,
+                    industry: "Various"
+                };
+
+                const card = createExperienceCard(newExperience);
+                experiencesContainer.appendChild(card);
+
+                // Clear inputs
+                nameInput.value = '';
+                adviceInput.value = '';
+            } else {
+                alert('Please enter both name and advice');
+            }
+        }
+
+        // Event Listeners
+        submitBtn.addEventListener('click', submitExperience);
+
+        // Initialize page
+        renderInitialExperiences();
+    </script>
+</body>
+</html>

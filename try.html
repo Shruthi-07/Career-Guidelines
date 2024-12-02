@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Explorer: Job Role Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .job-explorer {
+            display: flex;
+            gap: 20px;
+        }
+
+        .job-selection {
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .job-button {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .job-button:hover {
+            background-color: #2980b9;
+        }
+
+        .job-simulation {
+            flex-grow: 1;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        .job-details {
+            margin-bottom: 20px;
+        }
+
+        .job-description {
+            margin-bottom: 15px;
+        }
+
+        .task-section {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .task {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .complete-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .decline-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .experience-log {
+            margin-top: 20px;
+            background-color: #f1f8ff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .experience-entry {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e6f2ff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Career Explorer: Job Role Simulator</h1>
+        
+        <div class="job-explorer">
+            <div class="job-selection">
+                <h2>Choose a Job Role</h2>
+                <div class="job-list" id="jobList">
+                    <!-- Job buttons will be dynamically added here -->
+                </div>
+            </div>
+            
+            <div class="job-simulation" id="jobSimulation">
+                <div id="welcomeMessage">
+                    <h2>Welcome to Career Explorer!</h2>
+                    <p>Select a job role to begin your simulated work experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const jobRoles = [
+            {
+                title: "Software Developer",
+                description: "Design, develop, and maintain software applications.",
+                tasks: [
+                    {
+                        title: "Code Review",
+                        description: "Review a team member's code and provide constructive feedback.",
+                        difficulty: "Medium",
+                        reward: "Technical Skill +2"
+                    },
+                    {
+                        title: "Debug Complex Issue",
+                        description: "Investigate and fix a critical bug in the main application.",
+                        difficulty: "Hard",
+                        reward: "Problem Solving +3"
+                    }
+                ]
+            },
+            {
+                title: "Marketing Specialist",
+                description: "Create and implement marketing strategies to promote products or services.",
+                tasks: [
+                    {
+                        title: "Social Media Campaign",
+                        description: "Design a social media marketing strategy for a new product launch.",
+                        difficulty: "Medium",
+                        reward: "Creative Skills +2"
+                    },
+                    {
+                        title: "Market Research",
+                        description: "Conduct comprehensive market research for a potential new market segment.",
+                        difficulty: "Hard",
+                        reward: "Analytical Skills +3"
+                    }
+                ]
+            },
+            {
+                title: "Graphic Designer",
+                description: "Create visual concepts using computer software or by hand.",
+                tasks: [
+                    {
+                        title: "Brand Identity Design",
+                        description: "Develop a logo and brand guidelines for a startup.",
+                        difficulty: "Medium",
+                        reward: "Design Skills +2"
+                    },
+                    {
+                        title: "Complex Illustration Project",
+                        description: "Create a detailed illustration for a marketing campaign.",
+                        difficulty: "Hard",
+                        reward: "Creativity +3"
+                    }
+                ]
+            }
+        ];
+
+        const jobList = document.getElementById('jobList');
+        const jobSimulation = document.getElementById('jobSimulation');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        let experienceLog = [];
+
+        // Create job selection buttons
+        function initializeJobButtons() {
+            jobRoles.forEach((job, index) => {
+                const button = document.createElement('button');
+                button.classList.add('job-button');
+                button.textContent = job.title;
+                button.addEventListener('click', () => startJobSimulation(job));
+                jobList.appendChild(button);
+            });
+        }
+
+        // Start job simulation
+        function startJobSimulation(job) {
+            // Clear previous simulation
+            jobSimulation.innerHTML = '';
+
+            // Job details section
+            const jobDetailsDiv = document.createElement('div');
+            jobDetailsDiv.classList.add('job-details');
+            jobDetailsDiv.innerHTML = `
+                <h2>${job.title}</h2>
+                <p class="job-description">${job.description}</p>
+            `;
+            jobSimulation.appendChild(jobDetailsDiv);
+
+            // Tasks section
+            const taskSectionDiv = document.createElement('div');
+            taskSectionDiv.classList.add('task-section');
+            taskSectionDiv.innerHTML = '<h3>Available Tasks</h3>';
+
+            job.tasks.forEach(task => {
+                const taskDiv = document.createElement('div');
+                taskDiv.classList.add('task');
+                taskDiv.innerHTML = `
+                    <h4>${task.title}</h4>
+                    <p>${task.description}</p>
+                    <p>Difficulty: ${task.difficulty}</p>
+                    <div class="action-buttons">
+                        <button class="action-btn complete-btn">Complete Task</button>
+                        <button class="action-btn decline-btn">Decline Task</button>
+                    </div>
+                `;
+
+                // Task completion logic
+                const completeBtn = taskDiv.querySelector('.complete-btn');
+                const declineBtn = taskDiv.querySelector('.decline-btn');
+
+                completeBtn.addEventListener('click', () => {
+                    const experience = {
+                        jobTitle: job.title,
+                        taskTitle: task.title,
+                        reward: task.reward,
+                        date: new Date().toLocaleDateString()
+                    };
+                    experienceLog.push(experience);
+                    updateExperienceLog();
+                    alert(`Task completed! ${task.reward}`);
+                });
+
+                declineBtn.addEventListener('click', () => {
+                    alert('Task declined. No experience gained.');
+                });
+
+                taskSectionDiv.appendChild(taskDiv);
+            });
+            jobSimulation.appendChild(taskSectionDiv);
+
+            // Experience log section
+            const experienceSection = document.createElement('div');
+            experienceSection.classList.add('experience-log');
+            experienceSection.innerHTML = '<h3>Your Experience Log</h3>';
+            experienceSection.id = 'experienceLogSection';
+            jobSimulation.appendChild(experienceSection);
+
+            updateExperienceLog();
+        }
+
+        // Update experience log display
+        function updateExperienceLog() {
+            const experienceLogSection = document.getElementById('experienceLogSection');
+            experienceLogSection.innerHTML = '<h3>Your Experience Log</h3>';
+
+            experienceLog.forEach(entry => {
+                const entryDiv = document.createElement('div');
+                entryDiv.classList.add('experience-entry');
+                entryDiv.innerHTML = `
+                    <strong>${entry.jobTitle}</strong>: ${entry.taskTitle}<br>
+                    Reward: ${entry.reward}<br>
+                    Date: ${entry.date}
+                `;
+                experienceLogSection.appendChild(entryDiv);
+            });
+        }
+
+        // Initialize the page
+        initializeJobButtons();
+    </script>
+</body>
+</html>

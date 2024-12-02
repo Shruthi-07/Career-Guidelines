@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background-color: #007BFF;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+h1, h2 {
+  margin: 10px 0;
+}
+
+form {
+  max-width: 600px;
+  margin: 20px auto;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, textarea, button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Resume Preview */
+.resume-preview {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.resume-output {
+  border: 1px solid #ccc;
+  padding: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+</style>
+<body>
+  <header>
+    <div class="logo">
+      <h1>Resume Builder</h1>
+    </div>
+  </header>
+
+  <section class="form-section">
+    <h2>Create Your Resume</h2>
+    <form id="resumeForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" name="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="summary">Summary</label>
+        <textarea id="summary" name="summary" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="education">Education</label>
+        <textarea id="education" name="education" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="experience">Work Experience</label>
+        <textarea id="experience" name="experience" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="skills">Skills</label>
+        <textarea id="skills" name="skills" rows="4" required></textarea>
+      </div>
+      <button type="button" onclick="generateResume()">Generate Resume</button>
+    </form>
+  </section>
+
+  <section class="resume-preview">
+    <h2>Resume Preview</h2>
+    <div id="resumeOutput" class="resume-output"></div>
+    <button id="downloadButton" style="display:none;" onclick="downloadResume()">Download PDF</button>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Resume Builder. All rights reserved.</p>
+  </footer>
+</body>
+<script>
+    function generateResume() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const summary = document.getElementById("summary").value;
+  const education = document.getElementById("education").value;
+  const experience = document.getElementById("experience").value;
+  const skills = document.getElementById("skills").value;
+
+  const resumeOutput = `
+  ${name.toUpperCase()}
+  Email: ${email}
+  Phone: ${phone}
+
+  SUMMARY
+  ${summary}
+
+  EDUCATION
+  ${education}
+
+  WORK EXPERIENCE
+  ${experience}
+
+  SKILLS
+  ${skills}
+  `;
+
+  document.getElementById("resumeOutput").innerText = resumeOutput;
+  document.getElementById("downloadButton").style.display = "block";
+}
+
+function downloadResume() {
+  const resumeContent = document.getElementById("resumeOutput").innerText;
+  const blob = new Blob([resumeContent], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Resume.txt";
+  link.click();
+}
+
+</script>
+</html>

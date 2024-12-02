@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Preparation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background-color: #007BFF;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 0;
+}
+
+header nav ul li {
+  margin: 0 15px;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.hero {
+  background: linear-gradient(to bottom right, #007BFF, #0056b3);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h2 {
+  margin: 10px 0;
+}
+
+.resources, .quiz {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.resources h2, .quiz h2 {
+  margin-bottom: 20px;
+}
+
+.resource-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.card h3 {
+  margin: 10px 0;
+}
+
+
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+</style>
+<body>
+  <header>
+    <div class="logo">
+      <h1>Interview Prep</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h2>Prepare for Your Next Interview</h2>
+      <p>Boost your confidence and ace your interviews with expert tips and interactive quizzes.</p>
+    </div>
+  </section>
+
+  <section id="resources" class="resources">
+    <h2>Interview Resources</h2>
+    <div class="resource-cards">
+      <div class="card">
+        <h3>Common Questions</h3>
+        <p>Explore frequently asked interview questions with sample answers.</p>
+      </div>
+      <div class="card">
+        <h3>Behavioral Tips</h3>
+        <p>Learn the STAR method to answer behavioral questions effectively.</p>
+      </div>
+      <div class="card">
+        <h3>Resume Tips</h3>
+        <p>Craft a resume that stands out to recruiters.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section id="quiz" class="quiz">
+    <h2>Interview Readiness Quiz</h2>
+    <form id="quizForm">
+      <div class="quiz-question">
+        <h3>1. How do you prepare for a behavioral question?</h3>
+        <label><input type="radio" name="q1" value="1"> Structure your answer using the STAR method</label><br>
+        <label><input type="radio" name="q1" value="0"> Answer with unrelated personal stories</label>
+      </div>
+      <div class="quiz-question">
+        <h3>2. What's the best way to research a company?</h3>
+        <label><input type="radio" name="q2" value="1"> Visit their website and study recent news</label><br>
+        <label><input type="radio" name="q2" value="0"> Look only at their social media accounts</label>
+      </div>
+      <button type="button" onclick="submitQuiz()">Submit</button>
+    </form>
+    <div id="quizResult" class="quiz-result"></div>
+  </section> -->
+
+  <footer>
+    <p>&copy; 2024 Interview Prep. All rights reserved.</p>
+  </footer>
+
+</body>
+<script>
+    function submitQuiz() {
+  const answers = document.querySelectorAll('input[type="radio"]:checked');
+  const quizResult = document.getElementById('quizResult');
+
+  if (answers.length < 2) {
+    quizResult.innerHTML = "<p style='color:red;'>Please answer all the questions.</p>";
+    return;
+  }
+
+  let score = 0;
+  answers.forEach(answer => {
+    score += parseInt(answer.value);
+  });
+
+  let resultMessage = "";
+  if (score === 2) {
+    resultMessage = "Excellent! You're ready for your interview!";
+  } else if (score === 1) {
+    resultMessage = "Good job, but consider brushing up on a few areas.";
+  } else {
+    resultMessage = "Keep learning and practicing to improve your readiness.";
+  }
+
+  quizResult.innerHTML = `<p>${resultMessage}</p>`;
+}
+
+</script>
+</html>

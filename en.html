@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Messenger</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md glass-morphism p-8 rounded-2xl shadow-2xl">
+        <h1 class="text-3xl font-bold mb-6 text-white text-center">
+            🔐 Secure Messenger
+        </h1>
+
+        <!-- Encryption Section -->
+        <div class="mb-6">
+            <label class="block text-white mb-2">Message to Encrypt</label>
+            <textarea 
+                id="messageToEncrypt" 
+                class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows="4" 
+                placeholder="Enter your secret message"
+            ></textarea>
+            <button 
+                id="encryptBtn"
+                class="w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition duration-300"
+            >
+                Encrypt Message
+            </button>
+        </div>
+
+        <!-- Encrypted Message Display -->
+        <div id="encryptedSection" class="hidden mb-6">
+            <label class="block text-white mb-2">Encrypted Message</label>
+            <textarea 
+                id="encryptedMessage" 
+                readonly
+                class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/20 mb-2"
+                rows="4"
+            ></textarea>
+            <input 
+                id="encryptionKey" 
+                readonly
+                class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/20 mb-3"
+                placeholder="Encryption Key"
+            >
+        </div>
+
+        <!-- Decryption Section -->
+        <div class="mb-6">
+            <label class="block text-white mb-2">Decrypt Message</label>
+            <textarea 
+                id="messageToDecrypt" 
+                class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/20 mb-3"
+                rows="4" 
+                placeholder="Paste encrypted message"
+            ></textarea>
+            <input 
+                id="decryptionKey" 
+                class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/20 mb-3"
+                placeholder="Enter decryption key"
+            >
+            <button 
+                id="decryptBtn"
+                class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition duration-300"
+            >
+                Decrypt Message
+            </button>
+        </div>
+
+        <!-- Decrypted Message Display -->
+        <div id="decryptedSection" class="hidden">
+            <label class="block text-white mb-2">Decrypted Message</label>
+            <textarea 
+                id="decryptedMessage" 
+                readonly
+                class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/20"
+                rows="4"
+            ></textarea>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

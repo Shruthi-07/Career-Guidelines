@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Chat Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 700px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            max-width: 80%;
+            margin-bottom: 15px;
+            clear: both;
+        }
+
+        .message.user {
+            float: right;
+            text-align: right;
+        }
+
+        .message.bot {
+            float: left;
+            text-align: left;
+        }
+
+        .message-content {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .message.bot .message-content {
+            background-color: #e9ecef;
+            color: black;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            background-color: #4a4a4a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .job-selection-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .job-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .job-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Career Chat Simulator</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendButton = document.getElementById('sendButton');
+
+        const jobScenarios = {
+            "Software Developer": {
+                introduction: "Welcome to the world of software development! I'm your career guide. Would you like to start a project?",
+                tasks: [
+                    {
+                        description: "You need to debug a critical issue in the company's main application. Do you want to take on this challenge?",
+                        options: ["Yes, I'll debug", "No, I'm not ready"]
+                    },
+                    {
+                        description: "A client wants a new feature implemented. How would you approach this?",
+                        options: ["Discuss requirements", "Start coding immediately"]
+                    }
+                ]
+            },
+            "Marketing Specialist": {
+                introduction: "Welcome to the marketing world! Ready to create some innovative campaigns?",
+                tasks: [
+                    {
+                        description: "We need to create a social media strategy for a new product launch. What's your first step?",
+                        options: ["Research target audience", "Draft initial campaign ideas"]
+                    },
+                    {
+                        description: "A potential client is interested in our services. How do you plan to pitch?",
+                        options: ["Prepare a detailed presentation", "Schedule a discovery call"]
+                    }
+                ]
+            }
+        };
+
+        let currentScenario = null;
+        let currentTaskIndex = 0;
+
+        function addMessage(message, type = 'bot') {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', type);
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('message-content');
+            contentDiv.textContent = message;
+            
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            // Auto scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function startJobSelection() {
+            addMessage("Hi there! I'm your career guide. Which job role would you like to explore today?");
+            
+            const jobSelectionDiv = document.createElement('div');
+            jobSelectionDiv.classList.add('job-selection-buttons');
+            
+            Object.keys(jobScenarios).forEach(job => {
+                const jobButton = document.createElement('button');
+                jobButton.textContent = job;
+                jobButton.classList.add('job-button');
+                jobButton.onclick = () => startJobScenario(job);
+                jobSelectionDiv.appendChild(jobButton);
+            });
+            
+            chatMessages.appendChild(jobSelectionDiv);
+        }
+
+        function startJobScenario(job) {
+            currentScenario = jobScenarios[job];
+            currentTaskIndex = 0;
+            
+            // Clear previous job selection buttons
+            const jobSelectionButtons = chatMessages.querySelector('.job-selection-buttons');
+            if (jobSelectionButtons) {
+                jobSelectionButtons.remove();
+            }
+            
+            addMessage(`You've chosen the ${job} role!`);
+            addMessage(currentScenario.introduction);
+            presentNextTask();
+        }
+
+        function presentNextTask() {
+            if (currentTaskIndex < currentScenario.tasks.length) {
+                const currentTask = currentScenario.tasks[currentTaskIndex];
+                addMessage(currentTask.description);
+                
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('job-selection-buttons');
+                
+                currentTask.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.textContent = option;
+                    optionButton.classList.add('job-button');
+                    optionButton.onclick = () => handleTaskResponse(option);
+                    optionsDiv.appendChild(optionButton);
+                });
+                
+                chatMessages.appendChild(optionsDiv);
+            } else {
+                addMessage("Congratulations! You've completed all tasks in this scenario.");
+                startJobSelection();
+            }
+        }
+
+        function handleTaskResponse(response) {
+            // Clear previous options
+            const optionsButtons = chatMessages.querySelector('.job-selection-buttons');
+            if (optionsButtons) {
+                optionsButtons.remove();
+            }
+            
+            // Add user's response
+            addMessage(response, 'user');
+            
+            // Provide feedback based on response
+            switch(response) {
+                case "Yes, I'll debug":
+                    addMessage("Great! Debugging requires patience and systematic approach. You've gained technical problem-solving skills!");
+                    break;
+                case "No, I'm not ready":
+                    addMessage("It's okay to know your limits. Continuous learning is key in software development.");
+                    break;
+                case "Discuss requirements":
+                    addMessage("Excellent choice! Clear communication is crucial in project success.");
+                    break;
+                case "Start coding immediately":
+                    addMessage("Hold on! Always clarify requirements before diving into code.");
+                    break;
+                case "Research target audience":
+                    addMessage("Smart move! Understanding your audience is the foundation of any successful marketing campaign.");
+                    break;
+                case "Draft initial campaign ideas":
+                    addMessage("Creativity is important, but research should come first.");
+                    break;
+                case "Prepare a detailed presentation":
+                    addMessage("A well-prepared presentation can make a strong first impression!");
+                    break;
+                case "Schedule a discovery call":
+                    addMessage("Great networking approach! Personal connections matter in business.");
+                    break;
+                default: addMessage("Sorry this is not the answer to our question");
+                    break;
+            }
+            
+            // Move to next task
+            currentTaskIndex++;
+            setTimeout(presentNextTask, 1500);
+        }
+
+        // Event Listeners
+        sendButton.addEventListener('click', () => {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, 'user');
+                chatInput.value = '';
+            }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+
+        // Start the application
+        startJobSelection();
+    </script>
+</body>
+</html>

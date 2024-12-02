@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Guidance Quiz</title>
+  <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://t3.ftcdn.net/jpg/03/33/47/38/360_F_333473807_K8AknnNZynjMf3ycQ8Y3eV2OdsUK5QOG.jpg" alt="Career Guidance Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="quiz-section" id="quiz">
+    <h1>Career Guidance Quiz</h1>
+    <form id="careerQuiz">
+      <div class="question">
+        <h3>1. How physically active are you in your daily life?</h3>
+        <label><input type="radio" name="fitness" value="1"> Very active</label><br>
+        <label><input type="radio" name="fitness" value="2"> Moderately active</label><br>
+        <label><input type="radio" name="fitness" value="3"> Not very active</label>
+      </div>
+      <div class="question">
+        <h3>2. Which type of job interests you the most?</h3>
+        <label><input type="radio" name="interest" value="1"> Outdoor and physical jobs</label><br>
+        <label><input type="radio" name="interest" value="2"> Creative and desk-based jobs</label><br>
+        <label><input type="radio" name="interest" value="3"> People-oriented service jobs</label>
+      </div>
+      <div class="question">
+        <h3>3. Are you comfortable working under pressure or deadlines?</h3>
+        <label><input type="radio" name="pressure" value="1"> Yes, I thrive under pressure</label><br>
+        <label><input type="radio" name="pressure" value="2"> I can handle it moderately well</label><br>
+        <label><input type="radio" name="pressure" value="3"> I prefer less stressful environments</label>
+      </div>
+      <button type="button" onclick="calculateResult()">Submit</button>
+    </form>
+    <div id="result" class="result"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Career Guidance. All rights reserved.</p>
+  </footer>
+
+  <script src="quiz.js"></script>
+</body>
+<script>
+    function calculateResult() {
+  const fitness = document.querySelector('input[name="fitness"]:checked');
+  const interest = document.querySelector('input[name="interest"]:checked');
+  const pressure = document.querySelector('input[name="pressure"]:checked');
+  const resultDiv = document.getElementById('result');
+
+  if (!fitness || !interest || !pressure) {
+    resultDiv.innerHTML = "<p style='color:red;'>Please answer all the questions!</p>";
+    return;
+  }
+
+  const fitnessScore = parseInt(fitness.value);
+  const interestScore = parseInt(interest.value);
+  const pressureScore = parseInt(pressure.value);
+
+  let resultMessage = "";
+
+  if (fitnessScore === 1 && interestScore === 1 && pressureScore === 1) {
+    resultMessage = "You might enjoy a physically demanding job like firefighting, construction, or military service.";
+  } else if (fitnessScore >= 2 && interestScore === 2) {
+    resultMessage = "Consider creative desk-based jobs like graphic design, software development, or content writing.";
+  } else if (interestScore === 3 && pressureScore >= 2) {
+    resultMessage = "A career in teaching, customer service, or healthcare might be a good fit for you.";
+  } else {
+    resultMessage = "Explore a balanced career in administration, project management, or sales.";
+  }
+
+  resultDiv.innerHTML = `<p><strong>Result:</strong> ${resultMessage}</p>`;
+}
+
+</script>
+</html>

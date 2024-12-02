@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Development Hub</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background-color: #007BFF;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+header nav ul li {
+  margin: 0 15px;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+h2 {
+  color: #007BFF;
+}
+
+.skills, .resources, .quiz {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.skills-list, .resource-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.skill-card, .card {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.card h3, .skill-card h3 {
+  margin-bottom: 10px;
+}
+
+.quiz-question {
+  margin-bottom: 20px;
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.quiz-result {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #007BFF;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  header nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .skills-list, .resource-cards {
+    flex-direction: column;
+  }
+}
+
+</style>
+<body>
+  <header>
+    <div class="logo">
+      <h1>Skill Development Hub</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#quiz">Skill Assessment</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="skills" class="skills">
+    <h2>Skills to Develop</h2>
+    <div class="skills-list">
+      <div class="skill-card">
+        <h3>Web Development</h3>
+        <p>Learn HTML, CSS, JavaScript, and frameworks like React or Angular.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Data Science</h3>
+        <p>Learn Python, Machine Learning, Data Analysis, and Visualization techniques.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Digital Marketing</h3>
+        <p>Master SEO, SEM, Social Media Marketing, and Google Analytics.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Project Management</h3>
+        <p>Learn Agile, Scrum, Lean principles, and tools like Jira and Trello.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="resources" class="resources">
+    <h2>Learning Resources</h2>
+    <div class="resource-cards">
+      <div class="card">
+        <h3>Free Courses</h3>
+        <p>Explore free online courses to get started with various skills.</p>
+      </div>
+      <div class="card">
+        <h3>Books</h3>
+        <p>Discover top books that can help you deepen your knowledge in specific areas.</p>
+      </div>
+      <div class="card">
+        <h3>Videos</h3>
+        <p>Watch tutorials and expert advice on various platforms like YouTube or Coursera.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz" class="quiz">
+    <h2>Skill Assessment Quiz</h2>
+    <form id="quizForm">
+      <div class="quiz-question">
+        <h3>1. How comfortable are you with programming?</h3>
+        <label><input type="radio" name="q1" value="1"> Very comfortable</label><br>
+        <label><input type="radio" name="q1" value="0"> Somewhat comfortable</label><br>
+        <label><input type="radio" name="q1" value="0"> Not comfortable</label>
+      </div>
+      <div class="quiz-question">
+        <h3>2. Have you used data analysis tools like Excel, R, or Python?</h3>
+        <label><input type="radio" name="q2" value="1"> Yes</label><br>
+        <label><input type="radio" name="q2" value="0"> No</label>
+      </div>
+      <button type="button" onclick="submitQuiz()">Submit</button>
+    </form>
+    <div id="quizResult" class="quiz-result"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Skill Development Hub. All rights reserved.</p>
+  </footer>
+</body>
+<script>
+    function submitQuiz() {
+  const answers = document.querySelectorAll('input[type="radio"]:checked');
+  const quizResult = document.getElementById('quizResult');
+
+  if (answers.length < 2) {
+    quizResult.innerHTML = "<p style='color:red;'>Please answer all the questions.</p>";
+    return;
+  }
+
+  let score = 0;
+  answers.forEach(answer => {
+    score += parseInt(answer.value);
+  });
+
+  let resultMessage = "";
+  if (score === 2) {
+    resultMessage = "You're on the right track! Keep improving and learning.";
+  } else if (score === 1) {
+    resultMessage = "You're making progress! Consider learning a bit more to improve your skills.";
+  } else {
+    resultMessage = "Keep working on your foundation and explore more resources to strengthen your skills.";
+  }
+
+  quizResult.innerHTML = `<p>${resultMessage}</p>`;
+}
+
+</script>
+</html>
